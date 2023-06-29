@@ -1,0 +1,49 @@
+version: '3'
+
+
+services:
+  deportistas:
+    build: ./deportistas
+    depends_on:
+      - datadeportistas
+    environment:
+      - PORT=2500
+      - MONGODB_CNN=mongodb://datadeportistas:27017/test
+  tipoejercicios:
+    build: ./tipoejercicios
+    depends_on:
+      - datatipoejercicios
+    environment:
+      - PORT=2500
+      - MONGODB_CNN=mongodb://datatipoejercicios:27017/test
+    # ports:
+    #   - "2500:2500"
+  ejerciciorealizados:
+    build: ./ejerciciorealizados
+    depends_on:
+      - dataejerciciorealizados
+    environment:
+      - PORT=2500
+      - MONGODB_CNN=mongodb://dataejerciciorealizados:27017/test
+  datadeportistas:
+    image: mongo
+    # ports:
+    #   - "27017:27017"
+  datatipoejercicios:
+    image: mongo
+    # ports:
+    #   - "27017:27017"
+  dataejerciciorealizados:
+    image: mongo
+    # ports:
+    #   - "27017:27017"
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - deportistas
+      - tipoejercicios
+      - ejerciciorealizados
