@@ -1,0 +1,80 @@
+<div class="container p-4">
+  <figure class="text-center">
+      <blockquote class="blockquote">
+        <p class="h2">Deportista</p>
+      </blockquote>
+  </figure>
+  
+  <div class="row ">
+
+      <div class="col-sm-6 offset-md-3 ">
+          <div class="card card-body">
+              <form #loginForm="ngForm" (ngSubmit)="submitData(loginForm.value)" [formGroup]="form">
+                <div class="form-group mb-3">
+                  <input formControlName="id" [(ngModel)]="id" placeholder="ID Deportista (Para Actualizar)" id="id" type="text" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                  <input formControlName="nombre" placeholder="Nombre" id="nombre" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && form.controls['nombre'].errors }" />
+                  <div *ngIf="submitted && form.controls['nombre'].errors" class="invalid-feedback">
+                    <div *ngIf="form.controls['nombre'].errors['required']">El nombre es obligatorio.</div>
+                    <div *ngIf="form.controls['nombre'].errors['lowercase']">El nombre debe estar en minúsculas, exceptuando las primeras letras de cada palabra.</div>
+                  </div>
+                </div>                
+                <div class="form-group mb-3">
+                  <input formControlName="peso" placeholder="Peso" id="peso" type="number" class="form-control" [ngClass]="{ 'is-invalid': submitted && form.controls['peso'].errors }" />
+                  <div *ngIf="submitted && form.controls['peso'].errors" class="invalid-feedback">
+                    <div *ngIf="form.controls['peso'].errors['negative']">El peso no puede ser negativo.</div>
+                    <div *ngIf="form.controls['peso'].errors['max']">El peso no puede ser mayor a 9999.</div>
+                  </div>
+                </div>
+                <div class="form-group mb-3">
+                  <input formControlName="altura" placeholder="Altura" id="altura" type="number" class="form-control" [ngClass]="{ 'is-invalid': submitted && form.controls['altura'].errors }" />
+                  <div *ngIf="submitted && form.controls['altura'].errors" class="invalid-feedback">
+                    <div *ngIf="form.controls['altura'].errors['negative']">La altura no puede ser negativa.</div>
+                    <div *ngIf="form.controls['altura'].errors['max']">La altura no puede ser mayor a 9999.</div>
+                  </div>
+                </div>
+                <div class="form-group mb-3">
+                  <input formControlName="edad" placeholder="Edad" id="edad" type="number" class="form-control" [ngClass]="{ 'is-invalid': submitted && form.controls['edad'].errors }" />
+                  <div *ngIf="submitted && form.controls['edad'].errors" class="invalid-feedback">
+                    <div *ngIf="form.controls['edad'].errors['negative']">La edad no puede ser negativa.</div>
+                    <div *ngIf="form.controls['edad'].errors['max']">La edad no puede ser mayor a 9999.</div>
+                  </div>
+                </div>
+                  <div class="d-grid gap-2 col-6 mx-auto">
+                      <button class="btn btn-secondary btn-block">
+                          Guardar
+                      </button>
+                      <button type="button" class="btn btn-dark ">
+                          Cancelar
+                      </button>
+                  </div>
+              </form>
+          </div>
+          
+      </div>
+      <table class="table">
+        <thead>
+          <tr >
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Peso</th>
+            <th scope="col">Altura</th>
+            <th scope="col">Edad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let deportista of dataDeportistas.deportistas">
+            <td>{{deportista._id}}</td>
+            <td>{{deportista.nombre | uppercase }}</td>
+            <td>{{deportista.peso | currency:'USD':'' }}</td>
+            <td>{{deportista.altura | currency:'USD':''}}</td>
+            <td>{{deportista.edad | currency:'USD':'' }}</td>
+            <td>
+              <button type="button" class="btn btn-danger btn-sm" (click)="deportista._id && deleteDeportista(deportista._id)">Eliminar</button>                
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  </div>

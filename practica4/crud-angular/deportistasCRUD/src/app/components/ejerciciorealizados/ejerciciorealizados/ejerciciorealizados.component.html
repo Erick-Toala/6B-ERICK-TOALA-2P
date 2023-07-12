@@ -1,0 +1,146 @@
+<div class="container p-4">
+  <figure class="text-center">
+      <blockquote class="blockquote">
+        <p class="h2">Ejercicios Realizados</p>
+      </blockquote>
+  </figure>
+
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card card-body">
+        <form #loginForm="ngForm" (ngSubmit)="submitData(loginForm.value)">
+          <div class="form-group mb-3">
+            <input name="id" [(ngModel)]="id" placeholder="ID (Para Actualizar)" id="id" type="text" class="form-control" />
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <select  name="idtipoejercicio" ngModel id="idtipoejercicio" type="text" class="form-select" aria-label="Default select example">
+                  <option value="" disabled selected>Tipo Ejercicio</option>
+                  <option *ngFor="let tipoEjercicio of dataTipoEjercicios.tipoejercicio" [value]="tipoEjercicio._id">{{tipoEjercicio.tipo | uppercase}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <select  name="iddeportista" ngModel id="iddeportista" type="text" class="form-select" aria-label="Default select example">
+                  <option value="" disabled selected>Deportista</option>
+                  <option *ngFor="let deportista of dataDeportistas.deportistas" [value]="deportista._id">{{deportista.nombre | uppercase}}</option>
+                </select>
+                <!-- <input name="iddeportista" ngModel placeholder="ID Deportista" id="iddeportista" type="text" class="form-control" /> -->
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <input name="fecha" ngModel placeholder="Fecha" id="fecha" type="text" class="form-control" />
+                
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <input name="hora" ngModel placeholder="Hora" id="hora" type="text" class="form-control" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <input name="tiempo" ngModel placeholder="Tiempo" id="tiempo" type="text" class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <input name="caloriasquemadas" ngModel placeholder="Calorias quemadas" id="caloriasquemadas" type="text" class="form-control" />
+                
+              </div>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <textarea name="nombre" ngModel placeholder="Descripción" id="nombre" type="text" class="form-control" rows="3"></textarea>
+          </div>
+          <div class="d-grid gap-2 col-6 mx-auto">
+              <button class="btn btn-secondary btn-block">
+                  Guardar
+              </button>
+              <button type="button" class="btn btn-dark ">
+                  Cancelar
+              </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">ID Tipo Ejercicio</th>
+        <th scope="col">ID Deportista</th>
+        <th scope="col">Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ejerciciorealizado of dataEjerciciosRealizados.ejerciciorealizados">
+        <td>{{ejerciciorealizado._id}}</td>
+        <td>{{ejerciciorealizado.nombre | uppercase}}</td>
+        <td>{{ejerciciorealizado.idtipoejercicio}}</td>
+        <td>{{ejerciciorealizado.iddeportista}}</td>
+        <td>{{ejerciciorealizado.fecha}}</td>
+        <td>
+          <button type="button" class="btn btn-danger btn-sm" (click)="ejerciciorealizado._id && deleteEjercicioRealizado(ejerciciorealizado._id)">Eliminar</button>                
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- 
+<div>
+    <form #loginForm="ngForm" (ngSubmit)="submitData(loginForm.value)">
+      <div class="main">
+        <div class="input-fields">
+          <input name="nombre" ngModel placeholder="Nombre" id="nombre" type="text" class="input-field" />
+        </div>
+        <div class="input-fields">
+          <input name="idtipoejercicio" ngModel placeholder="idtipoejercicio" id="idtipoejercicio" type="text" class="input-field" />
+        </div>
+        <div class="input-fields">
+            <input name="iddeportista" ngModel placeholder="iddeportista" id="iddeportista" type="text" class="input-field" />
+          </div>
+          <div class="input-fields">
+            <input name="fecha" ngModel placeholder="fecha" id="fecha" type="text" class="input-field" />
+          </div>
+          <div class="input-fields">
+            <input name="hora" ngModel placeholder="hora" id="hora" type="text" class="input-field" />
+          </div>
+          <div class="input-fields">
+            <input name="tiempo" ngModel placeholder="tiempo" id="tiempo" type="text" class="input-field" />
+          </div>
+          <div class="input-fields">
+            <input name="caloriasquemadas" ngModel placeholder="caloriasquemadas" id="caloriasquemadas" type="text" class="input-field" />
+          </div>
+        <button>Crear Ejercicio Realizado</button>
+      </div>
+    </form>
+    <table>
+      <thead>
+        <th>Nombre</th>
+        <th>idtipoejercicio</th>
+        <th>iddeportista</th>
+        <th>fecha</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ejerciciorealizado of dataEjerciciosRealizados.ejerciciorealizados">
+          <td>{{ejerciciorealizado.nombre}}</td>
+          <td>{{ejerciciorealizado.idtipoejercicio}}</td>
+          <td>{{ejerciciorealizado.iddeportista}}</td>
+          <td>{{ejerciciorealizado.fecha}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->
